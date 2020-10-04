@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="moivedescription.html">
+
+    <title>Movie Show</title>
+    <style>
+        .full {
+            margin-left: 43px;
+        }
+        
+        .card {
+            box-shadow: 0 14px 18px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            width: 23%;
+            float: left;
+            margin-inline-end: 20px;
+            margin-block-end: 20px;
+            border-radius: 30px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .card:hover {
+            transform: scale(1.2);
+            box-shadow: 80px 80px 80px 80px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card img {
+            border-radius: 18px;
+        }
+        
+        .continer img {
+            width: 40px;
+            height: 30px;
+        }
+        
+        .head h2 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-style: oblique;
+            font-weight: bold;
+            font-stretch: ultra-expanded;
+            text-align: start;
+            margin-left: 152px;
+            margin-top: -67px;
+        }
+        
+        .head h1 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 50px;
+        }
+        
+        .hr1 {
+            border-radius: 5px;
+            border: 0;
+            height: 8px;
+            margin-left: 43px;
+            margin-right: 43px;
+            background-image: linear-gradient( to right, rgb(54, 37, 206), #0d17a8, rgb(13, 4, 100));
+        }
+        
+        html,
+        body {
+            padding: 10px 0 0 0;
+            margin: 0;
+        }
+        
+        .galleryContainer {
+            width: 100%;
+            height: 350px;
+            max-width: 92.9%;
+            margin: auto;
+            user-select: none;
+            box-shadow: 0px 0px 3px 1px #00000078;
+            box-sizing: border-box;
+            border-radius: 15px;
+        }
+        
+        .galleryContainer .slideShowContainer {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: gainsboro;
+            position: relative;
+            border-radius: 15px;
+        }
+        
+        .galleryContainer .slideShowContainer #playPause {
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            background-image: url(images/playPause.png);
+            background-repeat: no-repeat;
+            z-index: 5;
+            background-size: cover;
+            margin: 5px;
+            cursor: pointer;
+        }
+        
+        .galleryContainer .slideShowContainer #playPause:hover {
+            opacity: .7;
+        }
+        
+        .galleryContainer .slideShowContainer .imageHolder {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .galleryContainer .slideShowContainer .imageHolder img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .galleryContainer .slideShowContainer .imageHolder .captionText {
+            display: none;
+        }
+        
+        .galleryContainer .slideShowContainer .leftArrow,
+        .galleryContainer .slideShowContainer .rightArrow {
+            width: 50px;
+            background: #00000036;
+            position: absolute;
+            left: 0;
+            z-index: 1;
+            transition: background 0.5s;
+            height: 72px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        
+        .galleryContainer .slideShowContainer .rightArrow {
+            left: auto;
+            right: 0;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        
+        .galleryContainer .slideShowContainer .leftArrow:hover,
+        .galleryContainer .slideShowContainer .rightArrow:hover {
+            background: #000000a8;
+            cursor: pointer;
+        }
+        
+        .galleryContainer .arrow {
+            display: inline-block;
+            border: 3px solid white;
+            width: 10px;
+            height: 10px;
+            border-left: none;
+            border-bottom: none;
+            margin: auto;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+        
+        .galleryContainer .arrow.arrowLeft {
+            transform: rotateZ(-135deg);
+        }
+        
+        .galleryContainer .arrow.arrowRight {
+            transform: rotateZ(45deg);
+        }
+        
+        .galleryContainer .slideShowContainer>.captionTextHolder {
+            position: absolute;
+            bottom: 0;
+            z-index: 1;
+            color: white;
+            font-family: sans-serif;
+            font-size: 20px;
+            text-align: center;
+            width: 100%;
+            background: #00000047;
+            height: 50px;
+            line-height: 50px;
+            overflow: hidden;
+        }
+        
+        .galleryContainer .slideShowContainer>.captionTextHolder>.captionText {
+            margin: 0;
+            text-align: center;
+        }
+        
+        .galleryContainer #dotsContainer .dots:first-child {
+            margin-left: 0;
+        }
+        
+        .galleryContainer #dotsContainer .dots:hover,
+        .galleryContainer #dotsContainer .dots.active {
+            background-color: #717171;
+            ;
+        }
+        
+        .galleryContainer .moveLeftCurrentSlide {
+            animation-name: moveLeftCurrent;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+        
+        .galleryContainer .moveLeftNextSlide {
+            animation-name: moveLeftNext;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+        
+        @keyframes moveLeftCurrent {
+            from {
+                margin-left: 0;
+                opacity: 1;
+            }
+            to {
+                margin-left: -100%;
+                opacity: 1;
+            }
+        }
+        
+        @keyframes moveLeftNext {
+            from {
+                margin-left: 100%;
+                opacity: 1;
+            }
+            to {
+                margin-left: 0%;
+                opacity: 1;
+            }
+        }
+        
+        .galleryContainer .moveRightCurrentSlide {
+            animation-name: moveRightCurrent;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+        
+        .galleryContainer .moveRightPrevSlide {
+            animation-name: moveRightPrev;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+        
+        @keyframes moveRightCurrent {
+            from {
+                margin-left: 0;
+                opacity: 1;
+            }
+            to {
+                margin-left: 100%;
+                opacity: 1;
+            }
+        }
+        
+        @keyframes moveRightPrev {
+            from {
+                margin-left: -100%;
+                opacity: 1;
+            }
+            to {
+                margin-left: 0%;
+                opacity: 1;
+            }
+        }
+        
+        .slideTextFromBottom {
+            animation-name: slideTextFromBottom;
+            animation-duration: 0.7s;
+            animation-timing-function: ease-out;
+        }
+        
+        @keyframes slideTextFromBottom {
+            from {
+                opacity: 0;
+                margin-top: 100px
+            }
+            to {
+                opacity: 1;
+                margin-top: 0px;
+            }
+        }
+        
+        .slideTextFromTop {
+            animation-name: slideTextFromTop;
+            animation-duration: 0.7s;
+            animation-timing-function: ease-out;
+        }
+        
+        @keyframes slideTextFromTop {
+            from {
+                opacity: 0;
+                margin-top: -100px
+            }
+            to {
+                opacity: 1;
+                margin-top: 0px;
+            }
+        }
+        
+        .text {
+            color: white;
+            font-size: 10px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+        
+        .middle {
+            text-align: start;
+            transition: .5s ease;
+            opacity: 0;
+            position: absolute;
+            font-size: 13px;
+            color: white;
+            top: 40%;
+            left: 3%;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin-left: 2px;
+            margin-right: 2px;
+        }
+        
+        .card:hover .middle {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src=" https://image.freepik.com/free-vector/cinema-logo-with-popcorn_23-2147494040.jpg" style="height: 50px; width: 60px;float: left;margin-left: 43px; ">
+        <div class="head">
+            <h1>M</h1>
+            <h2>ovie Shows</h2>
+        </div>
+    </div>
+
+    <hr class="hr1" />
+
+    <div class="galleryContainer">
+        <div class="slideShowContainer">
+            <div id="playPause" onclick="playPauseSlides()"></div>
+            <div onclick="plusSlides(-1)" class="nextPrevBtn leftArrow"><span class="arrow arrowLeft"></span></div>
+            <div onclick="plusSlides(1)" class="nextPrevBtn rightArrow"><span class="arrow arrowRight"></span></div>
+            <div class="captionTextHolder">
+                <p class="captionText slideTextFromTop"></p>
+            </div>
+            <div class="imageHolder">
+                <img src="https://www.wallpaperup.com/uploads/wallpapers/2014/10/09/475640/ef37d1694c4b2268207b66312bd9d29a.jpg">
+
+                <p class="captionText">JOHN WICK</p>
+            </div>
+            <div class="imageHolder">
+                <img src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201909/vidya-shakuntaladvei_0-770x433.jpeg?TcTdLGI3TinbUs4ZenDK1m_v2rHvC0bR">
+                <p class="captionText">SHAKUNTALA DEVI</p>
+            </div>
+            <div class="imageHolder">
+                <img src="https://media.comicbook.com/2019/11/fantasy-island-reboot-poster-blumhouse-productions-1194912.jpeg?auto=webp&width=700&height=875&crop=700:875,smart">
+                <p class="captionText">FANTASY ISLAND</p>
+            </div>
+            <div class="imageHolder">
+                <img src="https://i0.wp.com/www.irishfilmcritic.com/wp-content/uploads/2020/03/Onward.jpg?resize=1863%2C932&ssl=1">
+                <p class="captionText">ONWARD</p>
+            </div>
+            <div id="dotsContainer"></div>
+        </div>
+
+    </div>
+
+    <script>
+        var slideIndex, slides, dots, captionText;
+
+        function initGallery() {
+            slideIndex = 0;
+            slides = document.getElementsByClassName("imageHolder");
+            slides[slideIndex].style.opacity = 1;
+
+            captionText = document.querySelector(".captionTextHolder .captionText");
+            captionText.innerText = slides[slideIndex].querySelector(".captionText").innerText;
+
+            //disable nextPrevBtn if slide count is one
+            if (slides.length < 2) {
+                var nextPrevBtns = document.querySelector(".leftArrow,.rightArrow");
+                nextPrevBtns.style.display = "none";
+                for (i = 0; i < nextPrevBtn.length; i++) {
+                    nextPrevBtn[i].style.display = "none";
+                }
+            }
+
+            //add dots
+            dots = [];
+            var dotsContainer = document.getElementById("dotsContainer"),
+                i;
+            for (i = 0; i < slides.length; i++) {
+                var dot = document.createElement("span");
+                dot.classList.add("dots");
+                dotsContainer.append(dot);
+                dot.setAttribute("onclick", "moveSlide(" + i + ")");
+                dots.push(dot);
+            }
+            dots[slideIndex].classList.add("active");
+        }
+        initGallery();
+
+        function plusSlides(n) {
+            moveSlide(slideIndex + n);
+        }
+
+        function moveSlide(n) {
+            var i;
+            var current, next;
+            var moveSlideAnimClass = {
+                forCurrent: "",
+                forNext: ""
+            };
+            var slideTextAnimClass;
+            if (n > slideIndex) {
+                if (n >= slides.length) {
+                    n = 0;
+                }
+                moveSlideAnimClass.forCurrent = "moveLeftCurrentSlide";
+                moveSlideAnimClass.forNext = "moveLeftNextSlide";
+                slideTextAnimClass = "slideTextFromTop";
+            } else if (n < slideIndex) {
+                if (n < 0) {
+                    n = slides.length - 1;
+                }
+                moveSlideAnimClass.forCurrent = "moveRightCurrentSlide";
+                moveSlideAnimClass.forNext = "moveRightPrevSlide";
+                slideTextAnimClass = "slideTextFromBottom";
+            }
+
+            if (n != slideIndex) {
+                next = slides[n];
+                current = slides[slideIndex];
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].className = "imageHolder";
+                    slides[i].style.opacity = 0;
+                    dots[i].classList.remove("active");
+                }
+                current.classList.add(moveSlideAnimClass.forCurrent);
+                next.classList.add(moveSlideAnimClass.forNext);
+                dots[n].classList.add("active");
+                slideIndex = n;
+                captionText.style.display = "none";
+                captionText.className = "captionText " + slideTextAnimClass;
+                captionText.innerText = slides[n].querySelector(".captionText").innerText;
+                captionText.style.display = "block";
+            }
+
+        }
+        var timer = null;
+
+        function setTimer() {
+            timer = setInterval(function() {
+                plusSlides(1);
+            }, 3000);
+        }
+        setTimer();
+
+        function playPauseSlides() {
+            var playPauseBtn = document.getElementById("playPause");
+            if (timer == null) {
+                setTimer();
+                playPauseBtn.style.backgroundPositionY = "0px"
+            } else {
+                clearInterval(timer);
+                timer = null;
+                playPauseBtn.style.backgroundPositionY = "-33px"
+            }
+        }
+    </script>
+
+    <div class="full">
+
+
+        <div class="card">
+            <img src="https://m.media-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_QL50_SY1000_CR0,0,666,1000_AL_.jpg" alt="Avatar" style="width:100%;height: 150px;">
+            <div class="middle">
+                <a href="moviedescription.html" style="float: right;color: white; margin-right: 4px;margin-top:15px"><b>Visit</b></a>
+
+                <h3>John Wick</h3>
+                <div class="text">Keanu Reeves plays John Wick, a retired hitman seeking vengeance for the killing of the dog given to him by his recently deceased wife....</div>
+            </div>
+
+        </div>
+        <div class="card">
+            <img src="https://cdn.bollywoodmdb.com/movies/largethumb/2020/shakuntala-devi/shakuntala-devi-poster-2.jpg" alt="Avatar" style="width:100%;height: 150px;">
+            <div class="middle">
+                <a href="moviedescription1.html" style="float: right;color: white; margin-right: 4px;margin-top:15px"><b>Visit</b></a>
+
+                <h3>Shakuntala Devi</h3>
+                <div class="text">A biographical drama on the life of Shakuntala Devi, the renowned mathematician, whose astounding skills of solving complex math problems in ....</div>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://www.sonypictures.com/sites/default/files/styles/max_560x840/public/title-key-art/fantasyisland_onesheet_1400x2100_unrated.png?itok=ZDmX5kR4" alt="Avatar" style="width:100%;height: 150px;">
+            <div class="middle">
+                <a href="moviedescription2.html" style="float: right;color: white; margin-right: 4px;margin-top:15px"><b>Visit</b></a>
+
+
+                <h3>Fantasy Island</h3>
+                <div class="text"> The film follows five people who visit the eponymous island, discovering that their dream fantasies brought to life begin to turn into horrific.....</div>
+            </div>
+        </div>
+        <div class="card">
+            <img src="http://www.impawards.com/2019/posters/gemini_man_ver2.jpg" alt="Avatar" style="width:100%;height: 150px;">
+            <div class="middle">
+                <a href="moviedescription3.html" style="float: right;color: white; margin-right: 4px;margin-top:15px"><b>Visit</b></a>
+
+                <h3>Gemini Man</h3>
+                <div class="text">The film follows a retiring hitman who is targeted by a much younger clone of himself while on the run from the government......</div>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://images-na.ssl-images-amazon.com/images/I/81Q3H6j%2BlhL._SL1280_.jpg" alt="Avatar" style="width:100%;height: 150px;">
+            <div class="middle">
+                <a href="moviedescription4.html" style="float: right;color: white; margin-right: 4px;margin-top:15px"><b>Visit</b></a>
+
+                <h3>Inception</h3>
+                <div class="text">The film stars Leonardo DiCaprio as a professional thief who steals information by infiltrating the subconscious of his targets.....</div>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://i1.wp.com/www.socialnews.xyz/wp-content/uploads/2020/01/22/bloodshot-movie-HD-poster-.jpg?resize=1382%2C2048&quality=90&zoom=1&ssl=1" alt="Avatar" style="width:100%;height: 150px; ">
+            <div class="middle ">
+                <a href="moviedescription5.html" style="float: right;color: white; margin-right: 4px;margin-top:15px"><b>Visit</b></a>
+
+                <h3>Bloodshot</h3>
+                <div class="text ">It follows a Marine who was killed in action, only to be brought back to life with superpowers by an organization that wants to use him as a weapon.</div>
+            </div>
+        </div>
+        <div class="card ">
+            <img src="https://fullplot.info/wp-content/uploads/2020/07/the-wretched.jpg " alt="Avatar " style="width:100%;height: 150px; ">
+            <div class="middle ">
+                <a href="moviedescription6.html" style="float: right;color: white; margin-right: 4px;margin-top:15px"><b>Visit</b></a>
+
+                <h3>The Wretched</h3>
+                <div class="text ">The film follows a defiant teenage boy who faces off with an evil witch, who is posing as the neighbor next door.....</div>
+            </div>
+        </div>
+        <div class="card ">
+            <img src="https://cdn.collider.com/wp-content/uploads/2020/08/enola-holmes-netflix-millie-bobby-brown-poster.jpg " alt="Avatar " style="width:100%;height: 150px; ">
+            <div class="middle ">
+                <a href="moviedescription7.html" style="float: right;color: white; margin-right: 4px;margin-top:15px"><b>Visit</b></a>
+
+                <h3>Enola Holmes</h3>
+                <div class="text ">The story is about the teenage sister of the already-famous Sherlock Holmes, who goes to London in search of her mother who has disappeared.</div>
+            </div>
+        </div>
+        <div class="card ">
+            <img src="https://i.pinimg.com/originals/91/4b/5e/914b5e8ea20ca96e6e36e08293e6a19b.jpg " alt="Avatar " style="width:100%;height: 150px; ">
+            <div class="middle ">
+                <a href="moviedescription8.html" style="float: right;color: white; margin-right: 4px;margin-top:15px"><b>Visit</b></a>
+
+                <h3>Artemis Fowl</h3>
+                <div class="text ">It details the adventures of Artemis Fowl II, a 12-year-old Irish prodigy who teams up with his faithful servant, as well as a a dwarf .......</div>
+            </div>
+        </div>
+        <div class="card ">
+            <img src="https://lumiere-a.akamaihd.net/v1/images/p_onward_19024_dbb512d5.jpeg?region=0,0,540,810 " alt="Avatar " style="width:100%;height: 150px; ">
+            <div class="middle ">
+                <a href="moviedescription9.html" style="float: right;color: white; margin-right: 4px;margin-top:15px"><b>Visit</b></a>
+
+                <h3>Onword</h3>
+                <div class="text ">Set in a suburban fantasy world, the film follows two elf brothers who set out on a quest to find an artifact that will temporarily bring back their deceased father... </div>
+            </div>
+        </div>
+        <div class="card ">
+            <img src="https://images.mymovies.net/images/film/cin/350x522/fid19887.jpg " alt="Avatar " style="width:100%;height: 150px; ">
+            <div class="middle ">
+                <a href="moviedescription10.html" style="float: right;color: white; margin-right: 4px;margin-top:15px"><b>Visit</b></a>
+
+                <h3>The Rhythm Section</h3>
+                <div class="text ">The film stars Blake Lively, Jude Law, and Sterling K. Brown, and follows a grieving woman who sets out for revenge after discovering the plane crash that killed her family...</div>
+            </div>
+        </div>
+        <div class="card ">
+            <img src="http://www.impawards.com/1995/posters/bad_boys.jpg " alt="Avatar " style="width:100%;height: 150px; ">
+            <div class="middle ">
+                <a href="moviedescription11.html" style="float: right;color: white; margin-right: 4px;margin-top:15px"><b>Visit</b></a>
+
+                <h3>Bad Boys</h3>
+                <div class="text ">It stars Will Smith and Martin Lawrence as two detectives in the Miami Police Department, Mike Lowrey and Marcus Burnett. Joe Pantoliano and Theresa Randle also appear in all three films....</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .top {
+            background-color: black;
+            text-align: center;
+            color: white;
+            padding: 1px;
+            font-size: 20px;
+        }
+        
+        .option {
+            width: 40%;
+            background-color: rgb(231, 227, 227);
+            padding-top: 20px;
+            padding-bottom: 20px;
+            margin-left: 15%;
+            margin-top: 40px;
+            padding: 14px;
+        }
+        
+        .cond {
+            background-color: rgb(169, 200, 250);
+            padding: 10px;
+            margin-top: 15px;
+            margin-left: 15px;
+            margin-bottom: 15px;
+            margin-right: 15px;
+        }
+        
+        .payment {
+            width: 20%;
+            background-color: rgb(231, 227, 227);
+            padding-top: 20px;
+            padding-bottom: 20px;
+            margin-left: 15%;
+            margin-top: 40px;
+            padding: 14px;
+            float: right;
+            margin-right: 240px;
+            margin-bottom: 25px;
+        }
+        
+        .dotted {
+            border: 1px dotted gray;
+        }
+        
+        .hr1 {
+            border-top: 1px dotted gray;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        
+        .pay {
+            width: 40%;
+            background-color: rgb(231, 227, 227);
+            margin-top: 10px;
+        }
+        
+        .btn1 {
+            height: 40px;
+            border: 1px solid rgb(2, 132, 253);
+            width: 250%;
+            color: rgb(2, 132, 253);
+            text-align: center;
+            color: white;
+            background-color: rgb(2, 132, 253);
+        }
+        
+        p {
+            margin-left: 10px;
+        }
+        
+        h2 {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">
+        <p><b>Bad Boys</b><br> </p>
+    </div>
+
+    <div class="payment">
+        <div class="dotted">
+            <p style="float:right; margin-top: 40px; margin-right: 10px; font-size: 22px; font-weight: bold;">₹ 999.00</p>
+            <h2>John Wick</h2>
+
+            <p>1 Ticket</p>
+
+            <hr class="hr1" />
+            <p>14 Novenber, 2014<br>05:30 PM<br>Venue<br>Backyard Sports Club: Gurgaon</p>
+            <hr class="hr1" />
+            <p>Access + Popcorn Combo(999):1 ticket(s)</p>
+
+        </div>
+        <p style="float: right;">₹ 999.00</p>
+        <p>Sub-total</p>
+        <p style="float: right; margin-top: -10px;">₹ 23.58</p>
+        <p style=" margin-top: -10px;">Booking Fees</p>
+        <hr class="hr1" />
+        <p style="float: right; margin-top: 8px;">₹ 1,022.58</p>
+        <p>Total Amount</p>
+
+
+        <hr class="hr1" />
+        <div class="pay">
+            <button onclick="myFunction()" class="btn1">Proceed to Pay</button>
+        </div>
+        <script>
+            function myFunction() {
+                document.getElementById("demo").innerHTML = "Payment Successful";
+            }
+        </script>
+
+    </div>
+    <div class=" option ">
+        <p>Please select from the following option(s)</p>
+        <input type="radio" name="gender" id="M-Ticket">M-Ticket
+        <div class="cond ">
+            <h3>M-Ticket Information</h3>
+            <p>1. Customer(s) can access their ticket(s) from 'My Profile' section on the app/mobile-web.</p>
+            <p>2. It is mandetory to present the ticket(s) in my profile section via app/mobile-web at the venue.</p>
+            <p>3. No physical ticket(s) are required to enter the venue.</p>
+        </div>
+    </div>
+</body>
+
+</html>

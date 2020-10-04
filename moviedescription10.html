@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <title>Document</title>
+    <style>
+        .div {
+            width: 100%;
+            height: 300px;
+            opacity: 0.8;
+            background-color: black;
+        }
+        
+        h1 {
+            color: white;
+        }
+        
+        i {
+            color: white;
+            font-size: 48px;
+        }
+        
+        .description .button {
+            border: 1px solid #ddd;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 400;
+            margin-right: 10px;
+            display: inline-block;
+            margin-top: 10px;
+            cursor: pointer;
+            background-color: black;
+        }
+        
+        iframe {
+            position: absolute;
+            margin-top: -200px;
+            margin-left: 15px;
+        }
+        
+        .interested {
+            background: rgb(247, 237, 219);
+            height: 80px;
+        }
+        
+        .interested .fa {
+            font-size: 50px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .interested .fa-thumbs-up {
+            color: blue;
+        }
+        
+        .interested .fa-thumbs-down {
+            color: red;
+        }
+        
+        .interested .fa:hover {
+            transform: scale(1.2);
+        }
+        
+        img {
+            border-radius: 50%;
+            height: 120px;
+            width: 120px;
+            margin-inline-end: 10px;
+        }
+        
+        .book .button {
+            position: relative;
+            background-color: rgb(2, 132, 253);
+            border: none;
+            font-size: 28px;
+            color: #FFFFFF;
+            width: 20%;
+            text-align: center;
+            padding: 10px;
+            -webkit-transition-duration: 0.4s;
+            /* Safari */
+            transition-duration: 0.4s;
+            text-decoration: none;
+            overflow: hidden;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+        
+        .book .button:after {
+            content: "";
+            background: rgb(2, 132, 253);
+            display: block;
+            position: absolute;
+            padding-top: 300%;
+            padding-left: 350%;
+            margin-left: -20px!important;
+            margin-top: -120%;
+            opacity: 0;
+            transition: all 0.8s
+        }
+        
+        .book .button:active:after {
+            padding: 0;
+            margin: 0;
+            opacity: 1;
+            transition: 0s
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <body>
+        <div class="div">
+            <div class="description" style="padding-top: 120px;margin-left: 25%;">
+                <h1> The Rhythm Section</h1>
+                <i class="fa fa-language"> English</i><br>
+                <button class="button">Drama</button>
+                <button class="button">Action</button>
+                <button class="button">Thriller</button>
+                <br><br>
+                <i class='fa fa-calendar'> 04 January, 2020</i>
+                <i class='fa fa-clock-o' style="margin-left:10px;"> 1 hrs 49 mins</i>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <iframe width="20%" height="350" src="https://www.youtube.com/embed/wl08jNF_w3E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+        </div>
+
+        <div class="interested">
+            <i class="fa fa-thumbs-up" style="padding-top:15px;margin-left: 25%;"></i>
+            <script>
+                document.querySelector(".fa").addEventListener("click", function(event) {
+                    toggleLike(event);
+                });
+
+                function toggleLike(ele) {
+                    ele.target.classList.toggle("fa-thumbs-down");
+                }
+            </script>
+        </div>
+        <div class="book" style="margin-top:100px">
+            <button class="button"><a href="book11.html" style="color: white;">Book Now</a></button>
+        </div>
+        <div class="summary" style="margin-top: -75px;margin-left: 25%; ">
+            <h2>Cast</h2>
+            <img src="https://www.gstatic.com/tv/thumb/persons/323857/323857_v9_bb.jpg">
+            <img src="https://www.gstatic.com/tv/thumb/persons/71369/71369_v9_bb.jpg">
+            <img src="https://www.gstatic.com/tv/thumb/persons/293463/293463_v9_bd.jpg">
+            <img src="https://www.gstatic.com/tv/thumb/persons/508039/508039_v9_bb.jpg">
+
+            <br><br>
+            <h2>Crew</h2>
+            <img src="https://www.gstatic.com/tv/thumb/persons/518687/518687_v9_bb.jpg">
+            <img src="https://www1.pictures.zimbio.com/gi/Steve+Mazzaro+Boss+Baby+New+York+Premiere+njIt3gMzzaZl.jpg">
+            <img src="https://www.gstatic.com/tv/thumb/persons/345179/345179_v9_ba.jpg">
+            <img src="https://www2.pictures.zimbio.com/gi/Luca+Mosca+John+Wick+Chapter+3+World+Premiere+CDqNNgWeV03l.jpg">
+
+        </div>
+    </body>
+
+</html>
